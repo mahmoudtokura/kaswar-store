@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-3">
+            {% include 'includes/category_menu.html' %}
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'shop:allProducts' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'shop:products_by_category' category_slug=product.category.slug %}">{{product.category.name}}</a></li>
+                        <li class="breadcrumb-item">{{product.name}}</li>
+                    </ol>
+                </nav>
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="{{product.image.url}}" alt="">
+                <div class="card-body">
+                    <h3 class="card-title custom_title">{{product.name}}</h3>
+                    <h4 class="custom_title">${{product.price}}</h4>
+                    <h4 class="custom_title">Product description</h4>
+                    <p class="card-text">{{product.decription}}</p>
+                    {% if product.stock <= 0 %}
+                        <P><b>Out of stock </b></P>
+                    {% else %}
+                        <a href="#" class="btn btn-success">Add to cart</a>
+                    {% endif %}
+                        <hr>
+                </div>
+            </div>
+            <!-- /.card -->
+            <br>
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
+<!-- /.container -->
+{% endblock body %}

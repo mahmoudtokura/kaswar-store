@@ -1,0 +1,6 @@
+
+<div class="list-group">
+    {% for link in category_links %}
+        <a href="{{ link.get_absolute_url }}" class="list-group-item">{{link.name}}</a>
+    {% endfor %}
+</div>

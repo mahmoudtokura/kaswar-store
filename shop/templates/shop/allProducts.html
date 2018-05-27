@@ -1,0 +1,85 @@
+{% extends 'base.html' %} {% load static %} {% block title %} {% if category %} {{ category.name }} - Kaswar {% else %} Welcome
+- Kaswar {% endif %} {% endblock title %} {% block body %} {% if category %} {% else %} {% endif %}
+<br>
+<!-- Breadcrums -->
+<div class="container">
+    {% if category %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'shop:allProducts' %}">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'shop:products_by_category' category_slug=category.slug %}">{{category.name}}</a>
+        </li>
+      </ol>
+    </nav>
+    {% endif %}
+</div>
+<div class="container">
+  {% if category %}
+  <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}"> {% else %}
+  <img src="{% static 'img/banner.jpg' %}" class="img-fluid" alt="banner"> {% endif %}
+</div>
+<br>
+<!-- Page Content -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-lg-3">
+      {% include "includes/category_menu.html" %}
+    </div>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9">
+
+      <div class="row">
+        <br>
+        <br> {% for product in products %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="{{product.get_absolute_url}}">
+              <img class="card-img-top" src="{% if product.image %}{{product.image.url}}{% endif %}" alt="{{product.name}}">
+            </a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="{{product.get_absolute_url}}" class="custom_title">{{ product.name }}</a>
+              </h4>
+              <h5 class="custom_title">${{ product.price }}</h5>
+              <p class="card-text custom_title">{{ product.description }}</p>
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+<div class="row align-items-center justify-content-center">
+  <div class="pagination">
+    <span class="step-links">
+      {% if products.has_previous %}
+      <a href="?page=1" class="btn btn-primary">&laquo; first</a>
+      <a href="?page={{ products.previous_page_number }}" class="btn btn-primary">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ products.number }} of {{ products.paginator.num_pages }}.
+      </span>
+
+      {% if products.has_next %}
+      <a href="?page={{ products.next_page_number }}" class="btn btn-primary">next</a>
+      <a href="?page={{ products.paginator.num_pages }}" class="btn btn-primary">last &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+{% endblock body %}
