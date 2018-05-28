@@ -1,25 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block title %} {% if category %} {{ category.name }} - Kaswar {% else %} Welcome
 - Kaswar {% endif %} {% endblock title %} {% block body %} {% if category %} {% else %} {% endif %}
 <br>
-<!-- Breadcrums -->
-<div class="container">
-    {% if category %}
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="{% url 'shop:allProducts' %}">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="{% url 'shop:products_by_category' category_slug=category.slug %}">{{category.name}}</a>
-        </li>
-      </ol>
-    </nav>
-    {% endif %}
-</div>
-<div class="container">
-  {% if category %}
-  <img src="{{ category.image.url }}" class="img-fluid" alt="{{ category.name }}"> {% else %}
-  <img src="{% static 'img/banner.jpg' %}" class="img-fluid" alt="banner"> {% endif %}
+<div class="container text-center">
+  <p>You searched for: <b>{{query}}</b></p>
 </div>
 <br>
 <!-- Page Content -->
@@ -35,7 +18,9 @@
 
       <div class="row">
         <br>
-        <br> {% for product in products %}
+        <br>
+        {% if products %}
+        {% for product in products %}
         <div class="col-lg-4 col-md-6 mb-4">
           <div class="card h-100">
             <a href="{{product.get_absolute_url}}">
@@ -52,6 +37,12 @@
           </div>
         </div>
         {% endfor %}
+        
+        {% else %}
+        <div class="text-center">
+          0 results found.
+        </div>
+        {% endif %}
       </div>
       <!-- /.row -->
 

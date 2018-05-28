@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    'search_app'
+    'search_app',
+    'cart'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,10 @@ ROOT_URLCONF = 'kaswar.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ os.path.join(BASE_DIR, 'templates/'), os.path.join(BASE_DIR, 'shop', 'templates/'), os.path.join(BASE_DIR, 'search_app', 'templates/')],
+        'DIRS': [ os.path.join(BASE_DIR, 'templates/'),
+                    os.path.join(BASE_DIR, 'shop', 'templates/'),
+                    os.path.join(BASE_DIR, 'search_app', 'templates/'), 
+                    os.path.join(BASE_DIR, 'cart', 'templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,7 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'shop.context_processors.category_menu'
+                'shop.context_processors.category_menu',
+                'cart.context_processors.cart_counter'
             ],
         },
     },
