@@ -24,9 +24,9 @@
                                                         <a href="{{cart_item.product.get_absolute_url}}">{{cart_item.product.name}}</a>
                                                         <div class="product-info">
                                                             <div>
-                                                                <a href="{% url 'cart:add_to_cart'  product_id=cart_item.product.id %}"><i class="fas fa-plus-square"></i></a>
-                                                                <a href="{% url 'cart:cart_remove_item'  product_id=cart_item.product.id %}"><i class="fas fa-minus-square"></i></a>
-                                                                <a href="{% url 'cart:delete_cart_item'  product_id=cart_item.product.id %}"><i class="fas fa-trash"></i></a>
+                                                                <a href="{% url 'cart:add_to_cart'  product_id=cart_item.product.id %}" class="btn btn-success"><i class="fas fa-plus-square"></i></a>
+                                                                <a href="{% url 'cart:cart_remove_item'  product_id=cart_item.product.id %}" class="btn btn-warning"><i class="fas fa-minus-square"></i></a>
+                                                                <a href="{% url 'cart:delete_cart_item'  product_id=cart_item.product.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -51,7 +51,6 @@
                     </div>
                     <div class="col-md-12 col-lg-4">
                         <div class="summary">
-                            <a href="{% url 'shop:allProducts' %}" class="btn btn-primary btn-lg btn-block">Continue shopping</a>
                             <h3>Summary</h3>
                             <div class="summary-item">
                                 <span class="text">Discount</span>
@@ -65,7 +64,24 @@
                                 <span class="text">Total</span>
                                 <span class="price">${{total}}</span>
                             </div>
-                            <button type="button" class="btn btn-primary btn-lg btn-block">Checkout</button>
+                            <div>
+                                <a href="{% url 'shop:allProducts' %}" class="btn btn-primary btn-lg btn-block">Continue shopping</a>
+                                {% if user.is_authenticated %}
+                                <form action="" method="POST" >
+                                        {% csrf_token %}
+                                        <script
+                                            src="https://js.paystack.co/v1/inline.js" 
+                                            data-key="{{ paystack_data_key }}"
+                                            data-email="customer@email.com"
+                                            data-amount="{{paystack_total}}"
+                                            data-ref="{{ transaction_id }}"
+                                        >
+                                        </script>
+                                    </form>
+                                {% else %}
+                                <a href="{% url 'signup' %}" class="btn btn-primary btn-lg btn-block">Register to process your order</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>

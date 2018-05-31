@@ -123,6 +123,27 @@ body{
 	margin-top: 20px;
 }
 
+.paystack-trigger-btn{
+    width: 100% !important;
+}
+
+.paystack-trigger-btn span {
+    display: block !important;
+    position: relative;
+    padding: 0% 12px;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-family: 'Roboto', sans-serif !important;
+    color: #3b99e0 !important;
+    background-image: none !important;
+    background: none !important;
+    width: 100% !important;
+}
+.errorlist li {
+	color: red;
+	font-weight: bold;
+}
+
 @media (min-width: 768px) {
 	.shopping-cart .items .product .info {
 		padding-top: 25px;

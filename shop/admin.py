@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, UserShippingDetail
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -15,4 +15,10 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 admin.site.register(Product, ProductAdmin)
+
+class UserShippingDetailAdmin(admin.ModelAdmin):
+    list_display = ('user','shippingAddress','shippingCity')
+    list_editable =('shippingAddress','shippingCity')
+
+admin.site.register(UserShippingDetail, UserShippingDetailAdmin)
 

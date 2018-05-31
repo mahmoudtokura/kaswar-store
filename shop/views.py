@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
-from .models import Category, Product
+from .models import Category, Product, UserShippingDetail
+from django.contrib.auth.models import Group, User
+from django.contrib.auth import authenticate, login
+from .forms import SignupForm
 
 # Create your views here.
 def index(request):
@@ -28,4 +31,26 @@ def productDetails(request, category_slug, product_slug):
     except Exception:
         pass
     return render(request, 'shop/product.html', {'product':product})
+
+
+def signupView(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            signup_user = User.objects.get(username=username)
+            customer_group = Group.objects.get(name='Customer')
+            customer_group.user_set.add(signup_user)
+
+            user_shipping_details = UserShippingDetail.objects.create(user=signup_user, shippingAddress=form.cleaned_data.get('shippingAddress'), shippingCity=form.cleaned_data.get('shippingCity'))
+            user_shipping_details.save()
+
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('cart:cart_detail')
+    else:
+        form = SignupForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 

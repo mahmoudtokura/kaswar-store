@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .local_settings import SECRET_KEY
+from .local_settings import SECRET_KEY, PAYSTACK_PUBLISHABLE_KEY
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'search_app',
-    'cart'
+    'cart',
+    'order',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+
+
+PAYSTACK_PUBLISHABLE_KEY = PAYSTACK_PUBLISHABLE_KEY #Imported from local_settings.py
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
